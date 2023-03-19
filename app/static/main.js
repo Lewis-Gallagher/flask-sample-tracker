@@ -4,12 +4,11 @@ const dateEl = document.getElementById('date')
 const outputEl = document.getElementById('output')
 
 let formElements = document.forms["sample-input"].getElementsByClassName("user-input");
-console.log(formElements)
 
-for (const i of formElements) {
-    i.addEventListener("input", function() {
+for (const elem of formElements) {
+    elem.addEventListener("input", function() {
         inputDate = new Date(dateEl.value)
         newDate = inputDate.toISOString().split('T')[0].split('-').join('')
-        outputEl.textContent = sampleNameEl.value + '_' + projectNameEl.options[projectNameEl.selectedIndex].value + '_' + newDate
+        outputEl.textContent = (sampleNameEl.value + '_' + projectNameEl.options[projectNameEl.selectedIndex].value + '_' + newDate).split(' ').join('_')
     })
 }
