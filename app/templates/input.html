@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Sample Input</h1>
+<form id="sample-input" action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.project.label }}<br>
+        {{ form.project(placeholder = 'Project Identifier', class_='user-input') }}
+        {% for error in form.project.errors %}
+        <span style="color:red;">{{ error }}</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.sample_name.label }}<br>
+        {{ form.sample_name(size = 32, placeholder = 'Sample Name', class_='user-input') }}
+        {% for error in form.sample_name.errors %}
+        <span style="color:red;">{{ error }}</span>
+        {% endfor %}
+    <p>
+        <p>
+            {{ form.date.label }}<br>
+            {{ form.date(class_='user-input') }}
+            {% for error in form.date.errors %}
+            <span style="color:red;">{{ error }}</span>
+            {% endfor %}
+        <p>
+        {{ form.submit() }}
+    </p>
+</form>
+
+<h2>Example sample name</h2>
+<p id="output"></p>
+
+{% endblock %}
