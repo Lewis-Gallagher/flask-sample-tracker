@@ -2,6 +2,7 @@ from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from dataclasses import dataclass
+from datetime import datetime
 
 @dataclass
 class User(UserMixin, db.Model):
@@ -21,6 +22,31 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
+
+@dataclass
+class Project(db.Model):
+    id: int
+    name: str
+    timestamp: datetime
+    author: User.id
+
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String, index = True, unique = True)
+    timestamp = db.Column(db.DateTime, index = True, default = datetime.utcnow())
+    author = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    
+@dataclass
+class Sample(db.Model):
+    id: int
+    name: str
+    project: Project.id
+    timestamp: datetime
+    
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String, index = True, unique = True)
+    project = db.Column(db.Integer, db.ForeignKey('project.id'))
+    timestamp = db.Column(db.DateTime, index = True, default = datetime.utcnow())
 
 @login.user_loader
 def load_user(id):

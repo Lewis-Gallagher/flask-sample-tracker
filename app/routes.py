@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app.models import User
-from app.forms import LoginForm, RegistrationForm, SampleInputForm
+from app.forms import LoginForm, RegistrationForm, SampleInputForm, ProjectInputForm
 
 
 @app.route('/')
@@ -85,4 +85,16 @@ def sample_input():
     if form.validate_on_submit():
         return redirect(url_for('sample_input'))
 
-    return render_template('input.html', form = form)
+    return render_template('sample-input.html', form = form)
+
+
+@app.route('/project-input', methods=['GET', 'POST'])
+@login_required
+def project_input():
+
+    form = ProjectInputForm()
+
+    if form.validate_on_submit():
+        return redirect(url_for('project_input'))
+
+    return render_template('project-input.html', form = form)

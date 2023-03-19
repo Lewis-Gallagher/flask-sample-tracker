@@ -73,3 +73,20 @@ class SampleInputForm(FlaskForm):
         special_chars = re.findall('\W', sample_name.data)
         if special_chars:
             raise ValidationError(f"Are you stupid? Don't use these: {special_chars}")
+        
+
+class ProjectInputForm(FlaskForm):
+
+    project_name = StringField(
+        label='Project identifier', 
+        validators=[DataRequired()]
+        )
+    date = DateField(
+        label='Date created',
+        validators=[DataRequired()],
+        default = datetime.today(),
+        render_kw={'disabled':''}
+        )
+    submit = SubmitField(
+        label='Submit'
+        )
